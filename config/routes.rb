@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :foods
+  resources :books
+  resources :books
   devise_for :users
   root 'pages#home'
 
