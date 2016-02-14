@@ -1,0 +1,12 @@
+<div class="col-md-3">
+    <div class="thumbnail">
+    <%= link_to food_path(food) do %>
+      	<%= image_tag "foie.jpg", class: "img-responsive" %>
+      <% end %>
+
+    <div class="caption">
+      <p><strong><%= link_to food.name, food_path(food) %></strong></p>
+      <p><%= food.price.to_f / 100 %></p>
+    </div>
+	</div>
+  </div>

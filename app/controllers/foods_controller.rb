@@ -5,7 +5,7 @@ class FoodsController < ApplicationController
   # GET /foods
   # GET /foods.json
   def index
-    @foods = Food.all
+    @foods = Food.where(availability: true)
   end
 
   # GET /foods/1
@@ -41,6 +41,7 @@ class FoodsController < ApplicationController
   # PATCH/PUT /foods/1
   # PATCH/PUT /foods/1.json
   def update
+     authorize! :manage, @food
     respond_to do |format|
       if @food.update(food_params)
         format.html { redirect_to @food, notice: 'Food was successfully updated.' }
