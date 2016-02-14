@@ -1,4 +1,5 @@
 class FoodsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_food, only: [:show, :edit, :update, :destroy]
 
   # GET /foods
@@ -24,7 +25,7 @@ class FoodsController < ApplicationController
   # POST /foods
   # POST /foods.json
   def create
-    @food = Food.new(food_params)
+    @food = current_user.foods.new(food_params)
 
     respond_to do |format|
       if @food.save
