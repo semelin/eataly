@@ -1,0 +1,37 @@
+<div class="row">
+	<h1 class="text-center"> Dashboard </h1>
+<div class="col-md-4">
+	<h3 class="text-center">
+		My food <%= link_to "New Food", new_food_path, class: "btn btn-primary btn-sm" %>
+	</h3>
+			<table class="table table-condensed"> 
+			<thead> 
+				<tr> 
+					<th>ID</th> 
+					<th>Name</th> 
+					<th>Available</th> 
+					<th></th>
+				</tr> 
+			</thead> 
+			<tbody> 
+				<% @foods.each do |food| %> 
+				<tr> 
+					<td><%= food.id %></td>
+					<td><%= link_to food.name, food_path(food) %></td><td><%= food.availability %></td> 
+					<td><%= link_to "edit", edit_food_path(food) %>
+					</td> 
+				</tr> 
+				<% end %>
+		 </tbody> 
+	 </table>
+</div>
+<div class="col-md-4">
+	<h3 class="text-center">
+		Purchased
+	</h3>
+</div>
+<div class="col-md-4">
+	<h3 class="text-center">
+		Sold
+	</h3>
+</div>
