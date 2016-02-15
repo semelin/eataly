@@ -7,6 +7,28 @@
 <h3><%= @food.name %> by <%= @food.producer %> </h3>
 <p><%= @food.description %>
 <h4 class="text-center"><%= @food.price.to_f / 100%> €</h4>
+
+
+
+<% if current_user %>
+
+<%= form_tag buy_path(slug: @food.slug) do %>
+			  <script
+			    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+			    data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+			    data-amount=" <%= @food.price %> "
+			    data-name="Eataly"
+			    data-description=" <%= @food.name %>"
+			    data-image=" <%= current_user.email %>"
+			    data-locale="auto">
+			  </script>
+			<% end %>
+
+	<% else %>
+			<p>Please login first to Buy</p>
+		<% end %>
+
+</div>
 </div>
 </div>
 
