@@ -2,22 +2,18 @@ class TransactionsController< ApplicationController
 
 def create
 		food = Food.find_by!(slug: params[:slug])
-		token = params[:stripeToken]
-	begin
-			
-			charge = Stripe::Charge.create(
-				amount: food.price,
-				currency: "usd",
-				card: token,
-				description: current_user.email)
+		sale = food.sales.create(
+			amount: food.price, 
+			buyer_email: current_user.email, 
+			seller_email: food.user.email, 
+			stripe_token: params[:stripeToken])
+		sale.process!
 
-			@sale = food.sales.create!(buyer_email: current_user.email)
+	if sale.finished?
 			redirect_to pickup_url(guid: @sale.guid)
-
-		rescue Stripe::CardError => e 
-			@error = e 
+		else 
 			redirect_to food_path(food), notice: @error
-			
+		end
 		end
 
 	def pickup
@@ -25,5 +21,4 @@ def create
 		@food = @sale.food
 	end
 
-end
 end
